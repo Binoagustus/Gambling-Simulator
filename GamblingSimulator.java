@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class GamblingSimulator {
 
 	Scanner sc = new Scanner(System.in);
-
+	
 	public static void main(String[] args) {
 
 		Gambler gambler = new Gambler();
@@ -23,7 +23,7 @@ public class GamblingSimulator {
 			int stakePerDay = sim.gamble(stake, bet);
 			numOfdays[i] = stakePerDay;
 		}
-		System.out.print(Arrays.toString(numOfdays) + " ");
+//		System.out.print(Arrays.toString(numOfdays) + " ");
 
 		int totalAmount = sim.calcTotalAmount(numOfdays);
 		
