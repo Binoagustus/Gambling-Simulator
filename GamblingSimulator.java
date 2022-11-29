@@ -25,7 +25,13 @@ public class GamblingSimulator {
 		}
 		System.out.print(Arrays.toString(numOfdays) + " ");
 
-		sim.calcTotalAmount(numOfdays);
+		int totalAmount = sim.calcTotalAmount(numOfdays);
+		
+		if(totalAmount > 0) {
+			System.out.println("Total Amount Won in " + numOfdays.length + " days is " + totalAmount + " dollars");
+		} else {
+			System.out.println("Total Amount Lost in " + numOfdays.length + " days is " + (-totalAmount) + " dollars");
+		}
 	}
 
 	public int gamble(int stake, int bet) {
@@ -69,7 +75,7 @@ public class GamblingSimulator {
 		}
 	}
 
-	public void calcTotalAmount(int[] numOfDays) {
+	public int calcTotalAmount(int[] numOfDays) {
 		int loss = 0;
 		int won;
 		int totalWon = 0;
@@ -85,7 +91,10 @@ public class GamblingSimulator {
 		totalWon = won * 50; // won 50 dollars per day
 		totalLost = loss * 50; // lost 50 dollars per day
 		System.out.println("\nDays won or lost out of " + numOfDays.length + " days are");
-		System.out.println("days won " + won + "\n total amount won " + totalWon + " dollars");
-		System.out.println("days lost " + loss + "\n total amount lost " + totalLost + " dollars");
+		System.out.println("days won " + won + "\namount won " + totalWon + " dollars");
+		System.out.println("days lost " + loss + "\namount lost " + totalLost + " dollars");
+		
+		int totalAmount = totalWon - totalLost;
+		return totalAmount;
 	}
 }
