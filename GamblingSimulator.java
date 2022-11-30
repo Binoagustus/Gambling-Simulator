@@ -1,6 +1,8 @@
 package com.bl.gambling_simulator;
 
-import java.util.Arrays;
+import java.time.Month;
+
+import java.time.YearMonth;
 
 import java.util.Random;
 
@@ -9,7 +11,7 @@ import java.util.Scanner;
 public class GamblingSimulator {
 
 	Scanner sc = new Scanner(System.in);
-	
+
 	public static void main(String[] args) {
 
 		Gambler gambler = new Gambler();
@@ -17,27 +19,39 @@ public class GamblingSimulator {
 		System.out.println("Gambling Simulator");
 		int stake = gambler.getInitialStake();
 		int bet = gambler.getBet();
-		int[] numOfdays = new int[20];
 
-		for (int i = 0; i < 20; i++) {
-			int stakePerDay = sim.gamble(stake, bet);
-			numOfdays[i] = stakePerDay;
-		}
-//		System.out.print(Arrays.toString(numOfdays) + " ");
+		for (int i = 1; i <= 12; i++) {
+			int days = sim.getnumOfDays(2022, i);
+			int[] numOfDays = new int[days];
 
-		int totalAmount = sim.calcTotalAmount(numOfdays);
-		
-		if(totalAmount > 0) {
-			System.out.println("Total Amount Won in " + numOfdays.length + " days is " + totalAmount + " dollars");
-		} else {
-			System.out.println("Total Amount Lost in " + numOfdays.length + " days is " + (-totalAmount) + " dollars");
+			for (int j = 0; j < days; j++) {
+				int stakePerDay = sim.gamble(stake, bet);
+				numOfDays[j] = stakePerDay;
+			}
+
+			int totalAmount = sim.calcTotalAmount(numOfDays);
+
+			if (totalAmount >= 0) {
+				System.out.println("Total Amount Won is " + totalAmount + " dollars");
+			} else {
+				System.out.println("Total Amount Lost is " + (-totalAmount) + " dollars");
+			}
+			
+			System.out.println("*******************************");
 		}
+	}
+
+	public int getnumOfDays(int year, int month) {
+		YearMonth obj = YearMonth.of(year, month);
+		Month monthName = obj.getMonth();
+		int days = obj.lengthOfMonth();
+		System.out.print(monthName + " of " + days + " days ");
+		return days;
 	}
 
 	public int gamble(int stake, int bet) {
 		int win = 0;
 		int lose = 0;
-		System.out.println("Initial Stake " + stake);
 
 		do {
 			if (bet == 1) { // bet is being made
@@ -54,9 +68,6 @@ public class GamblingSimulator {
 			}
 		} while (stake > 50 && stake < 150);// continue until player lost or won 50 % from initial stake
 
-		System.out.println("matches won per day = " + win);
-		System.out.println("matches lost per day = " + lose);
-
 		if (stake == 150) {
 			return 50;// as 50% of initial stake earned is 50 dollar
 		} else {
@@ -67,7 +78,7 @@ public class GamblingSimulator {
 	public boolean isWinOrLose() {
 		Random random = new Random();
 		int result = random.nextInt(2);
-
+		
 		if (result == 1) {
 			return true;
 		} else {
@@ -93,8 +104,9 @@ public class GamblingSimulator {
 		System.out.println("\nDays won or lost out of " + numOfDays.length + " days are");
 		System.out.println("days won " + won + "\namount won " + totalWon + " dollars");
 		System.out.println("days lost " + loss + "\namount lost " + totalLost + " dollars");
-		
+
 		int totalAmount = totalWon - totalLost;
 		return totalAmount;
 	}
+
 }
