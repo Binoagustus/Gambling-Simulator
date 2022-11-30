@@ -20,11 +20,11 @@ public class GamblingSimulator {
 		int stake = gambler.getInitialStake();
 		int bet = gambler.getBet();
 
-		for (int i = 1; i <= 12; i++) {
-
+		int i = 1;
+		do {
 			int daysInMonth = sim.getnumOfDays(2022, i);
 			int[] numOfDays = new int[daysInMonth];
-
+			
 			for (int j = 0; j < daysInMonth; j++) {
 				int stakePerDay = sim.gamble(stake, bet);
 				numOfDays[j] = stakePerDay;
@@ -42,12 +42,14 @@ public class GamblingSimulator {
 
 			if (totalAmount >= 0) {
 				System.out.println("Total Amount Won is " + totalAmount + " dollars");
+				i++;
 			} else {
 				System.out.println("Total Amount Lost is " + (-totalAmount) + " dollars");
+				i = 13;
 			}
 
 			System.out.println("*******************************");
-		}
+		}while(i <= 12);
 	}
 
 	public int getnumOfDays(int year, int month) {
