@@ -3,7 +3,7 @@ package com.bl.gambling_simulator;
 import java.time.Month;
 
 import java.time.YearMonth;
-
+import java.util.Arrays;
 import java.util.Random;
 
 import java.util.Scanner;
@@ -28,7 +28,7 @@ public class GamblingSimulator {
 				int stakePerDay = sim.gamble(stake, bet);
 				numOfDays[j] = stakePerDay;
 			}
-
+	
 			int totalAmount = sim.calcTotalAmount(numOfDays);
 
 			if (totalAmount >= 0) {
@@ -92,7 +92,7 @@ public class GamblingSimulator {
 		int totalWon = 0;
 		int totalLost = 0;
 
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < numOfDays.length; i++) {
 			if (numOfDays[i] == 0) {
 				loss++;
 			}
