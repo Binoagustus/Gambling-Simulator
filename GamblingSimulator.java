@@ -3,7 +3,7 @@ package com.bl.gambling_simulator;
 import java.time.Month;
 
 import java.time.YearMonth;
-import java.util.Arrays;
+
 import java.util.Random;
 
 import java.util.Scanner;
@@ -21,14 +21,23 @@ public class GamblingSimulator {
 		int bet = gambler.getBet();
 
 		for (int i = 1; i <= 12; i++) {
-			int days = sim.getnumOfDays(2022, i);
-			int[] numOfDays = new int[days];
 
-			for (int j = 0; j < days; j++) {
+			int daysInMonth = sim.getnumOfDays(2022, i);
+			int[] numOfDays = new int[daysInMonth];
+
+			for (int j = 0; j < daysInMonth; j++) {
 				int stakePerDay = sim.gamble(stake, bet);
 				numOfDays[j] = stakePerDay;
+				if (numOfDays[j] == 50) {
+					int dayIndex = j + 1;
+					System.out.println("Day " + dayIndex + " is maximum won luckiest day");
+
+				} else if (numOfDays[j] == 0) {
+					int dayIndex = j + 1;
+					System.out.println("Day " + dayIndex + " is maximum lost unluckiest day");
+				}
 			}
-	
+
 			int totalAmount = sim.calcTotalAmount(numOfDays);
 
 			if (totalAmount >= 0) {
@@ -36,7 +45,7 @@ public class GamblingSimulator {
 			} else {
 				System.out.println("Total Amount Lost is " + (-totalAmount) + " dollars");
 			}
-			
+
 			System.out.println("*******************************");
 		}
 	}
@@ -46,6 +55,7 @@ public class GamblingSimulator {
 		Month monthName = obj.getMonth();
 		int days = obj.lengthOfMonth();
 		System.out.print(monthName + " of " + days + " days ");
+		System.out.println("");
 		return days;
 	}
 
@@ -78,7 +88,7 @@ public class GamblingSimulator {
 	public boolean isWinOrLose() {
 		Random random = new Random();
 		int result = random.nextInt(2);
-		
+
 		if (result == 1) {
 			return true;
 		} else {
